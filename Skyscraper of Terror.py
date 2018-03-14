@@ -1,3 +1,6 @@
+from Inventory import Flashlight
+
+
 class Room():
     def __init__(self, name, description, id):
         self.name = name
@@ -51,6 +54,8 @@ living = Room('living Room', 'You are in the living room', 'lr')
 kitchen.add_connection(dining, "passage", ["east", "e"])
 dining.add_connection(kitchen, "passage", ["west", "w"])
 
+
+
 #kitchen.add_room('n', dining)
 #dining.add_room('s', kitchen)
 #dining.add_room('n', hallway)
@@ -69,7 +74,7 @@ dining.add_connection(kitchen, "passage", ["west", "w"])
 
 
 
-current_room = dining
+current_room = kitchen
 current_room.enter_room()
 
 while True:
