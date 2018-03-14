@@ -18,7 +18,7 @@ class Room():
             self.rooms[direction] = room
         self.connectors.append((connector, actions[0]))
 
-    def enter_room(self):
+    def enter_room(self, inventory):
         print self.name
         print
         print self.description
@@ -27,6 +27,10 @@ class Room():
             for connector in self.connectors:
                 print "There is a(n) " + connector[0] + \
                       " that goes " + connector[1]
+        print
+        for item in self.items:
+            print "You see a " + item.name + " here."
+        print
 
     def get_name(self):
         return self.name
