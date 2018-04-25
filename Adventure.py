@@ -1,5 +1,16 @@
 from room import Room
-from Inventory import Inventory, Flashlight, DarkRoom, LightSource
+from Inventory import Inventory, Flashlight, LightSource
+
+class DarkRoom(Room):
+    def enter_room(self, inventory):
+        light_sources = inventory.get(LightSource)
+        if LightSource.is_one_on(light_sources):
+            Room.enter_room(self, inventory)
+        else:
+            print ("You were eaten by a grue.")
+            print ("Game over.")
+            exit()
+
 
 helipad = Room('You have parachuted from a helicopter on a special mission to save the president inside of the Empire State Building from ZOMBIES', 'You are on the Empire State Building helipad and start to look around for a way to enter the building', 'h')
 staircase = Room('You open the door that leads to the staircase and you proceed to go down','After fending off 15 zombies you are now inside the building', 'd')
@@ -8,15 +19,16 @@ lobby = Room('In order to avoid another encounter with zombies you crouch down a
 kitchen = Room('After contemplating life you look around for another way to get deeper into the building and you spot a door that leads into the kitchen', 'After many attempts at forcefully pushing the door open, you are finally inside the kitchen and there still seems to be no sign of the president', 'b1')
 ceo_office = Room('You continue to venture deeper into the kitchen and you stumble upon the CEO office', 'The door of the office was wide open so you walked in but as soon as you entered the office you were attacked by a zombie that came out from behind the office door but fortunately the zombie had no legs so you stomped it out', 'b2')
 trapdoor = Room('You start to look at the dark oak table in the center of the office and you notice a small metal hatch under the desk', 'You opened the hatch and you fell into what seemed like an underground tunnel and you proceed to walk forward because that is the only way you can go', 'b3')
-living = Room('living Room', 'You are in the living room', 'lr')
+living = DarkRoom('living Room', 'You are in the living room', 'lr')
 
 helipad.add_connection(staircase, "staircase", ["east", "e"])
 staircase.add_connection(hallway, "dark and quiet hallway", ["west", "w"])
+
 hallway.add_connection(lobby, "lobby entirely full of zombies", ["north", "n"])
 lobby.add_connection(kitchen, "large metal kitchen door that seems to be blocked off from the other side", ["south", "s"])
 kitchen.add_connection(ceo_office, "office that belongs to the CEO of the building", ["west", "w"])
 ceo_office.add_connection(trapdoor, "You teleport back to the helipad", ["east", "e"])
-trapdoor.add_connection(helipad, "")
+trapdoor.add_connection(living, "You are here boy", ["east", "e"])
 
 current_room = helipad
 inventory = Inventory()
@@ -42,8 +54,13 @@ while True:
     elif isinstance(result, str):
         print result
         continue
+
+
     else:
-        print "I don't know what you mean"
+        result = inventory.process_command(command)
+        if len(result) == 0:
+
+            print "I don't know what you mean"
 
 
 

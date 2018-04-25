@@ -154,15 +154,7 @@ class Flashlight(LightSource):
         pass
 
 
-class DarkRoom(Room):
-    def enter_room(self, inventory):
-        light_sources = inventory.get(LightSource)
-        if LightSource.is_one_on(light_sources):
-            Room.enter_room(self, inventory)
-        else:
-            print ("You were eaten by a grue.")
-            print ("Game over.")
-            exit()
+
 
 
 
